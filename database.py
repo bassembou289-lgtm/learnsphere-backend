@@ -1,7 +1,8 @@
-# database.py - UPDATED FOR RENDER.COM
+# database.py - UPDATED FOR RENDER.COM with SQLAlchemy 1.4
 import os
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base  # Changed for SQLAlchemy 1.4
 
 def get_database_url():
     """Get database URL based on environment"""
@@ -23,7 +24,7 @@ def get_database_url():
     # 3. Check for Render SQLite (free tier)
     elif 'RENDER' in os.environ:
         print("🔧 Using SQLite on Render (free tier)")
-        # Use a persistent location
+        # Use current directory for database
         return "sqlite:///./learnsphere.db"
     
     # 4. Local development
@@ -35,11 +36,17 @@ def get_database_url():
 DATABASE_URL = get_database_url()
 
 # Create engine with SQLite compatibility
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {},
-    echo=False  # Set to True for debugging SQL queries
-)
+if "sqlite" in DATABASE_URL:
+    engine = create_engine(
+        DATABASE_URL,
+        connect_args={"check_same_thread": False},
+        echo=False  # Set to True for debugging SQL queries
+    )
+else:
+    engine = create_engine(
+        DATABASE_URL,
+        echo=False
+    )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -50,3 +57,12 @@ def get_db():
         yield db
     finally:
         db.close()
+
+# Test database connection
+if __name__ == "__main__":
+    try:
+        # Test connection
+        with engine.connect() as conn:
+            print("✅ Database connection successful!")
+    except Exception as e:
+        print(f"❌ Database connection failed: {e}")
