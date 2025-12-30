@@ -27,7 +27,7 @@ except ImportError:
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, sessionmaker
 from openai import OpenAI
 
 from database import Base, engine, get_db
@@ -798,3 +798,4 @@ def root():
 # ============================================================================
 
 application = app
+
