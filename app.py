@@ -16,7 +16,14 @@ os.chdir(app_dir)
 # NORMAL IMPORTS
 # ============================================================================
 import json
-from pydantic import BaseModel
+# Add this near the top of app.py
+try:
+    from pydantic import BaseModel
+    PYDANTIC_V2 = True
+except ImportError:
+    # Fallback for pydantic v1
+    from pydantic import BaseModel
+    PYDANTIC_V2 = False
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -789,4 +796,5 @@ def root():
 # ============================================================================
 # PYTHONANYWHERE WSGI COMPATIBILITY
 # ============================================================================
+
 application = app
