@@ -689,16 +689,16 @@ def trivia(data: TriviaRequest):
             prompt = """أنشئ 5 أسئلة trivial ممتعة وتعليمية.
 
 أعد JSON فقط:
-{
+{{
   "quiz": [
-    {
+    {{
       "q": "السؤال 1؟",
       "options": ["الخيار أ", "الخيار ب", "الخيار ج", "الخيار د"],
       "answer": "الخيار أ"
-    }
+    }}
     // 4 أسئلة أخرى
   ]
-}"""
+}}"""
         else:
             prompt = f"""Generate 5 trivia questions in {data.language}.
 
@@ -772,7 +772,7 @@ def get_about_info(data: AboutRequest):
 # ============================================================================
 # SYSTEM TEST
 # ============================================================================
-@app.post("/api/test")
+@app.get("/api/test")
 def test():
     return {"message": "pong", "status": "healthy", "ai_provider": "OpenRouter"}
 
@@ -798,4 +798,5 @@ def root():
 # ============================================================================
 
 application = app
+
 
