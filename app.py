@@ -94,7 +94,7 @@ def get_openrouter_key():
 # Get the API key
 OPENROUTER_API_KEY = get_openrouter_key()
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-MODEL = "google/gemini-2.0-flash-thinking-exp:free"
+MODEL = "google/gemma-2-2b-it"
 
 # Initialize OpenRouter client if we have a key
 client = None
@@ -798,5 +798,6 @@ def root():
 # ============================================================================
 
 application = app
+
 
 
