@@ -94,7 +94,7 @@ def get_openrouter_key():
 # Get the API key
 OPENROUTER_API_KEY = get_openrouter_key()
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-MODEL = "deepseek/deepseek-r1"
+MODEL = "deepseek/deepseek-r1-0528"
 
 # Initialize OpenRouter client if we have a key
 client = None
@@ -798,6 +798,7 @@ def root():
 # ============================================================================
 
 application = app
+
 
 
 
